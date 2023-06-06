@@ -12,7 +12,7 @@ select artist_name from artist
 where artist_name not like '% %';
 
 select track_name from track
-where string_to_array(lower(track_name), ' ')&&ARRAY['my',' my','my ',' my ','мой','мой ',' мой',' мой '];
+where string_to_array(lower(track_name), ' ')&&ARRAY['my', 'мой'];
 
 select genre_name, count(artist_id)artist_c from genre g 
 join genre_artist ga on g.id = ga.id 
@@ -33,7 +33,8 @@ select artist_name
 from artist a 
 where artist_name not in(
 select artist_name from artist a
-left join album a2 on a.id = a2.id
+join artist_album aa on a.id = aa.id 
+join album a2 on a.id = a2.id
 where a2.album_year = 2020 
 );
 
