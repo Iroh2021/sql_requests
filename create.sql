@@ -11,7 +11,7 @@ artist_name varchar(20) not null
 create table if not exists album (
 id serial primary key,
 album_name varchar(20) not null,
-album_year date 
+album_year integer
 );
 
 create table if not exists track (
@@ -24,7 +24,7 @@ track_duration integer
 create table if not exists collection (
 id serial primary key,
 collection_name text not null,
-collection_year date
+collection_year integer
 );
 
 create table if not exists genre_artist (

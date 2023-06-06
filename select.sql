@@ -12,18 +12,17 @@ select artist_name from artist
 where artist_name not like '% %';
 
 select track_name from track
-where lower(track_name) like '%мой%' or lower(track_name) like '%my%' ;
+where string_to_array(lower(track_name), ' ')&&ARRAY['my',' my','my ',' my ','мой','мой ',' мой',' мой '];
 
 select genre_name, count(artist_id)artist_c from genre g 
 join genre_artist ga on g.id = ga.id 
 group by g.genre_name 
 order by artist_c desc ;
 
-select count(*) track_count, album_year 
+select count(*) track_count 
 from track t 
 join album a on t.album_id = a.id 
-where a.album_year between 2019 and 2020
-group by a.album_year ;
+where a.album_year between 2019 and 2020 ;
 
 select avg(track_duration) avg_duration, album_name
 from track t 
@@ -32,9 +31,11 @@ group by a.album_name ;
 
 select artist_name
 from artist a 
-left join album a2 on a.id = a2.id 
-where a2.album_year != 2020 
-group by a.artist_name ;
+where artist_name not in(
+select artist_name from artist a
+left join album a2 on a.id = a2.id
+where a2.album_year = 2020 
+);
 
 select distinct  collection_name
 from collection c 
